@@ -32,6 +32,7 @@ const elMeta=document.getElementById('meta');
 const btnO=document.getElementById('btnO');
 const btnX=document.getElementById('btnX');
 const btnNext=document.getElementById('btnNext');
+const btnNextTop=document.getElementById('btnNextTop');
 const btnRestart=document.getElementById('btnRestart');
 const btnWrong=document.getElementById('btnWrong');
 const btnBack=document.getElementById('btnBack');
@@ -85,10 +86,13 @@ function showResult(user){
 
 btnO.addEventListener('click', ()=>{ if(!locked) showResult('O'); });
 btnX.addEventListener('click', ()=>{ if(!locked) showResult('X'); });
-btnNext.addEventListener('click', ()=>{
+function onNextClick(){
   if(!locked) return;
   if(idx<QUIZ.length-1){ idx+=1; render(); } else { finish(); }
-});
+}
+
+btnNext.addEventListener('click', onNextClick);
+btnNextTop.addEventListener('click', onNextClick);
 
 function setQuizMode(){
   quizView.classList.remove('hidden');
