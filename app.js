@@ -149,12 +149,29 @@ function finish(){
   setBtnsEnabled(false); box.classList.add('hidden'); locked=true;
 }
 
+function showResult(picked){
+  const q = QUIZ[idx];
+  const correct = q.answer;
+  const ok = picked === correct;
+
+  const key = String(q.id) + '|' + q.statement;
+
+  if(ok){
+    score += 1;
+    // 틀린문제 목록에서 제거 (맞추면 제거)
+    removeWrongByKey(key);
+  }else{
+    // 틀린문제 목록에 추가/유지 (또 틀리면 유지)
+    addWrong(q, picked);
+  }
+
   box.classList.remove('hidden');
   box.classList.toggle('good', ok);
   box.classList.toggle('bad', !ok);
-  title.textContent= ok ? `정답 (정답: ${correct})` : `오답 (정답: ${correct})`;
-  explain.textContent= (q.explanation && q.explanation.trim()) ? q.explanation : '(해설 추출 누락)';
-  locked=true; setBtnsEnabled(false);
+  title.textContent = ok ? `정답 (정답: ${correct})` : `오답 (정답: ${correct})`;
+  explain.textContent = (q.explanation && String(q.explanation).trim()) ? q.explanation : '(해설 추출 누락)';
+  locked = true;
+  setBtnsEnabled(false);
 }
 
 btnO.addEventListener('click', ()=>{ if(!locked) showResult('O'); });
